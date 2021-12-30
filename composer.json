@@ -4,6 +4,7 @@
     "name": "neosrulez/neos-scheduler",
     "require": {
         "neos/neos": "*",
+        "neos/swiftmailer": "*",
         "dragonmantank/cron-expression": "^3.1"
     },
     "autoload": {
