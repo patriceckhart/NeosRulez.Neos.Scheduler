@@ -1,0 +1,28 @@
+Neos:
+  Neos:
+    userInterface:
+      translation:
+        autoInclude:
+          NeosRulez.Neos.Scheduler:
+            - Main
+            - 'Module/Task/*'
+    modules:
+      administration:
+        submodules:
+          scheduler:
+            label: NeosRulez.Neos.Scheduler:Main:content.title
+            controller: 'NeosRulez\Neos\Scheduler\Controller\Module\TaskController'
+            description: NeosRulez.Neos.Scheduler:Main:content.description
+            icon: 'fas fa-stopwatch'
+            position: 'end'
+            actions:
+              index:
+                label: NeosRulez.Neos.Scheduler:Main:content.action
+                title: NeosRulez.Neos.Scheduler:Main:content.description
+            privilegeTarget: 'NeosRulez.Neos.Scheduler:Backend.Module.Task'
+NeosRulez:
+  Neos:
+    Scheduler:
+      frequencyInput: false
+      templatePathAndFilename: 'resource://NeosRulez.Neos.Scheduler/Private/Templates/Mail/Task.html'
+      senderMail: 'noreply@foo.com'

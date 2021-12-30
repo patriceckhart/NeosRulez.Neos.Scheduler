@@ -1,0 +1,5 @@
+NeosRulez.Neos.Scheduler.Module.TaskController.edit = NeosRulez.Neos.Scheduler:Module.TaskController.Edit
+
+prototype(NeosRulez.Neos.Scheduler:Module.TaskController.Edit) < prototype(NeosRulez.Neos.Scheduler:Module.TaskController.New) {
+    edit = true
+}

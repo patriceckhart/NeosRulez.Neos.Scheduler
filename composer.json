@@ -1,0 +1,19 @@
+{
+    "description": "A package for Neos CMS to easily manage cron-jobs.",
+    "type": "neos-package",
+    "name": "neosrulez/neos-scheduler",
+    "require": {
+        "neos/neos": "*",
+        "dragonmantank/cron-expression": "^3.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "NeosRulez\\Neos\\Scheduler\\": "Classes/"
+        }
+    },
+    "extra": {
+        "neos": {
+            "package-key": "NeosRulez.Neos.Scheduler"
+        }
+    }
+}

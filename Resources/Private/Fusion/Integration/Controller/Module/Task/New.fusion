@@ -1,0 +1,125 @@
+NeosRulez.Neos.Scheduler.Module.TaskController.new = NeosRulez.Neos.Scheduler:Module.TaskController.New
+
+prototype(NeosRulez.Neos.Scheduler:Module.TaskController.New) < prototype(Neos.Fusion:Component) {
+
+    @context.editorResource = Neos.Fusion:ResourceUri {
+        path = 'resource://NeosRulez.Neos.Scheduler/Public/monaco-editor-0.31.1/package/min/vs'
+    }
+    @context.loaderResource = Neos.Fusion:ResourceUri {
+        path = 'resource://NeosRulez.Neos.Scheduler/Public/monaco-editor-0.31.1/package/min/vs/loader.js'
+    }
+
+    renderer = afx`
+        <NeosRulez.Neos.Scheduler:Component.DefaultLayout>
+
+            <script>{"
+                function rawurldecode(str) {
+                    return decodeURIComponent((str + '').replace(/%(?![\da-f]{2})/gi, function () {
+                        return '%25';
+                    }));
+                }
+            "}</script>
+            <style>{"
+                .neos-controls input, .neos-controls select, .neos-controls textarea { width:100%; }
+                #Content { min-height:275px !important; }
+                .inputarea { overflow-x: hidden !important; background: none !important; color: transparent !important; border: 0px !important; width: 1px !important;}
+            "}</style>
+
+            <Neos.Fusion.Form:Form form.target.action={props.edit ? 'update' : 'create'} form.data.task={task} >
+
+                <div class="neos-row-fluid">
+                    <fieldset class="neos-span5">
+
+                        <Neos.Fusion.Form:Neos.BackendModule.FieldContainer label={I18n.translate('NeosRulez.Neos.Scheduler:Module.Task.Index:content.description')} field.name="task[description]" >
+                            <Neos.Fusion.Form:Input attributes.placeholder={I18n.translate('NeosRulez.Neos.Scheduler:Module.Task.Index:content.description')} />
+                        </Neos.Fusion.Form:Neos.BackendModule.FieldContainer>
+
+                        <Neos.Fusion.Form:Neos.BackendModule.FieldContainer label={I18n.translate('NeosRulez.Neos.Scheduler:Module.Task.Index:content.startDateTime')} field.name="task[startDateTime]" >
+                            <Neos.Fusion.Form:Input attributes.placeholder={I18n.translate('NeosRulez.Neos.Scheduler:Module.Task.Index:content.startDateTime')} attributes.type="datetime-local" attributes.value={task.startDateTime ? Date.format(task.startDateTime, 'Y-m-d\TH:i') : false} />
+                        </Neos.Fusion.Form:Neos.BackendModule.FieldContainer>
+
+                        <Neos.Fusion.Form:Neos.BackendModule.FieldContainer label={I18n.translate('NeosRulez.Neos.Scheduler:Module.Task.Index:content.stopDateTime')} field.name="task[stopDateTime]" >
+                            <Neos.Fusion.Form:Input attributes.placeholder={I18n.translate('NeosRulez.Neos.Scheduler:Module.Task.Index:content.stopDateTime')} attributes.type="datetime-local" attributes.value={task.stopDateTime ? Date.format(task.stopDateTime, 'Y-m-d\TH:i') : false} />
+                        </Neos.Fusion.Form:Neos.BackendModule.FieldContainer>
+
+                        <Neos.Fusion.Form:Neos.BackendModule.FieldContainer field.name="task[recurring]" attributes.style="padding-top: 23px !important">
+                            <Neos.Fusion.Form:Checkbox field.value={I18n.translate('NeosRulez.Neos.Scheduler:Module.Task.Index:content.recurring')} attributes.checked={task.recurring ? true : false} />
+                        </Neos.Fusion.Form:Neos.BackendModule.FieldContainer>
+
+                        <Neos.Fusion.Form:Neos.BackendModule.FieldContainer label={I18n.translate('NeosRulez.Neos.Scheduler:Module.Task.New:content.mailNotification')} field.name="task[email]" >
+                            <Neos.Fusion.Form:Input attributes.placeholder={I18n.translate('NeosRulez.Neos.Scheduler:Module.Task.New:content.mailAddress')} />
+                        </Neos.Fusion.Form:Neos.BackendModule.FieldContainer>
+
+                    </fieldset>
+
+                    <fieldset class="neos-span6 neos-offset1">
+
+                        <Neos.Fusion.Form:Neos.BackendModule.FieldContainer @if.render={!Configuration.setting('NeosRulez.Neos.Scheduler.frequencyInput')} label={I18n.translate('NeosRulez.Neos.Scheduler:Module.Task.Index:content.frequency')} field.name="task[frequency]" >
+                            <Neos.Fusion.Form:Select>
+                                <Neos.Fusion.Form:Select.Option option.value="* * * * *" >{I18n.translate('NeosRulez.Neos.Scheduler:Module.Task.New:content.every1Minute')}</Neos.Fusion.Form:Select.Option>
+                                <Neos.Fusion.Form:Select.Option option.value="*/15 * * * *" >{I18n.translate('NeosRulez.Neos.Scheduler:Module.Task.New:content.every15Minutes')}</Neos.Fusion.Form:Select.Option>
+                                <Neos.Fusion.Form:Select.Option option.value="0 * * * *" >{I18n.translate('NeosRulez.Neos.Scheduler:Module.Task.New:content.everyHour')}</Neos.Fusion.Form:Select.Option>
+                                <Neos.Fusion.Form:Select.Option option.value="0 1 * * *" >{I18n.translate('NeosRulez.Neos.Scheduler:Module.Task.New:content.everyDay')}</Neos.Fusion.Form:Select.Option>
+                                <Neos.Fusion.Form:Select.Option option.value="0 0 * * 0" >{I18n.translate('NeosRulez.Neos.Scheduler:Module.Task.New:content.everyWeek')}</Neos.Fusion.Form:Select.Option>
+                                <Neos.Fusion.Form:Select.Option option.value="0 0 1 * *" >{I18n.translate('NeosRulez.Neos.Scheduler:Module.Task.New:content.everyMonth')}</Neos.Fusion.Form:Select.Option>
+                            </Neos.Fusion.Form:Select>
+                        </Neos.Fusion.Form:Neos.BackendModule.FieldContainer>
+
+                        <Neos.Fusion.Form:Neos.BackendModule.FieldContainer @if.render={Configuration.setting('NeosRulez.Neos.Scheduler.frequencyInput')} label={I18n.translate('NeosRulez.Neos.Scheduler:Module.Task.Index:content.frequency')} field.name="task[frequency]" >
+                            <Neos.Fusion.Form:Input attributes.placeholder={I18n.translate('NeosRulez.Neos.Scheduler:Module.Task.Index:content.frequency')} />
+                        </Neos.Fusion.Form:Neos.BackendModule.FieldContainer>
+
+                        <div id="Content" style="max-width:99%;width:99%;min-height:600px"></div>
+
+                        <Neos.Fusion.Form:Neos.BackendModule.FieldContainer label="Command" field.name="task[command]" attributes.style="display:none">
+                            <Neos.Fusion.Form:Textarea attributes.id="command" attributes.placeholder="Command" />
+                        </Neos.Fusion.Form:Neos.BackendModule.FieldContainer>
+
+                    </fieldset>
+                </div>
+
+                <p class="neos-help-inline"><i class="fas fa-info-circle"></i> {I18n.translate('NeosRulez.Neos.Scheduler:Module.Task.New:content.scriptHelpline')} <span style="font-weight:bold">{flowPathRoot}</span> [FLOW_PATH_ROOT] {I18n.translate('NeosRulez.Neos.Scheduler:Module.Task.New:content.scriptHelpline1')}</p>
+
+                <div class="neos-footer">
+
+                    <Neos.Fusion.Form:Button attributes.class="neos-button neos-button-primary">
+                        {props.edit ? I18n.translate('NeosRulez.Neos.Scheduler:Module.Task.Edit:content.saveChanges') : I18n.translate('NeosRulez.Neos.Scheduler:Module.Task.Index:content.createNew')}
+                    </Neos.Fusion.Form:Button>
+
+                    <Neos.Fusion:Link.Action class="neos-button neos-button-default" href.action="index" >
+                        {I18n.translate('NeosRulez.Neos.Scheduler:Module.Task.New:content.cancel')}
+                    </Neos.Fusion:Link.Action>
+
+                </div>
+
+            </Neos.Fusion.Form:Form>
+
+            <script>{'
+                var require = {
+                    paths: {
+                        "vs": "' + editorResource + '",
+                    }
+                };
+            '}</script>
+            <script src={loaderResource} ></script>
+            <script>{'
+                require(["vs/editor/editor.main"], () => {
+                    const editor = monaco.editor.create(document.getElementById("Content"), {
+                        theme: "vs-dark",
+                        model: monaco.editor.createModel(rawurldecode("' + command + '"), "shell"),
+                        wordWrap: "on",
+                        language: "shell",
+                        automaticLayout: true,
+                        minimap: {
+                            enabled: false
+                        },
+                        scrollbar: {
+                            vertical: "auto"
+                        }
+                    });
+                        document.addEventListener("keyup", logKey ); function logKey(e) { let props = editor.getModel().getValue(); console.log(props); document.getElementById("command").value = props; }
+                });
+           '}</script>
+        </NeosRulez.Neos.Scheduler:Component.DefaultLayout>
+    `
+}

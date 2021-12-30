@@ -1,0 +1,10 @@
+privilegeTargets:
+  'Neos\Flow\Security\Authorization\Privilege\Method\MethodPrivilege':
+    'NeosRulez.Neos.Scheduler:Backend.Module.Task':
+      matcher: 'method(NeosRulez\Neos\Scheduler\Controller\Module\TaskController->.*Action())'
+roles:
+  'Neos.Neos:Administrator':
+    privileges:
+      -
+        privilegeTarget: 'NeosRulez.Neos.Scheduler:Backend.Module.Task'
+        permission: GRANT

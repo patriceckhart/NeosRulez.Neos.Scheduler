@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file original="" product-name="NeosRulez.Neos.Scheduler" source-language="en" datatype="plaintext">
+        <body>
+            <trans-unit id="content.mailNotification" xml:space="preserve">
+				<source>Mail notification after execution</source>
+			</trans-unit>
+			<trans-unit id="content.mailAddress" xml:space="preserve">
+				<source>Mail address</source>
+			</trans-unit>
+			<trans-unit id="content.every1Minute" xml:space="preserve">
+				<source>Every 1 minute</source>
+			</trans-unit>
+			<trans-unit id="content.every15Minutes" xml:space="preserve">
+				<source>Every 15 minutes</source>
+			</trans-unit>
+			<trans-unit id="content.everyHour" xml:space="preserve">
+				<source>Every hour</source>
+			</trans-unit>
+			<trans-unit id="content.everyDay" xml:space="preserve">
+				<source>Every day</source>
+			</trans-unit>
+			<trans-unit id="content.everyWeek" xml:space="preserve">
+				<source>Every week</source>
+			</trans-unit>
+			<trans-unit id="content.everyMonth" xml:space="preserve">
+				<source>Every month</source>
+			</trans-unit>
+			<trans-unit id="content.scriptHelpline" xml:space="preserve">
+				<source>All tasks are executed in the directory</source>
+			</trans-unit>
+			<trans-unit id="content.scriptHelpline1" xml:space="preserve">
+				<source></source>
+			</trans-unit>
+			<trans-unit id="content.cancel" xml:space="preserve">
+				<source>Cancel</source>
+			</trans-unit>
+        </body>
+    </file>
+</xliff>

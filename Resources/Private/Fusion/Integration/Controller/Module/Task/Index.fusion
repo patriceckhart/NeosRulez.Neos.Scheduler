@@ -1,0 +1,82 @@
+NeosRulez.Neos.Scheduler.Module.TaskController.index = NeosRulez.Neos.Scheduler:Module.Task.IndexController.Index
+
+prototype(NeosRulez.Neos.Scheduler:Module.Task.IndexController.Index) < prototype(Neos.Fusion:Component) {
+
+    renderer = afx`
+        <NeosRulez.Neos.Scheduler:Component.DefaultLayout>
+
+            <p @if.render={!tasks} >
+                {I18n.translate('NeosRulez.Neos.Scheduler:Module.Task.Index:content.noTasks')}
+            </p>
+
+            <table @if.render={tasks} class="neos-table">
+
+                <thead>
+                <tr>
+                    <td>{I18n.translate('NeosRulez.Neos.Scheduler:Module.Task.Index:content.description')}</td>
+                    <td>{I18n.translate('NeosRulez.Neos.Scheduler:Module.Task.Index:content.frequency')}</td>
+                    <td style="text-align:right" >{I18n.translate('NeosRulez.Neos.Scheduler:Module.Task.Index:content.startDateTime')}</td>
+                    <td style="text-align:right" >{I18n.translate('NeosRulez.Neos.Scheduler:Module.Task.Index:content.stopDateTime')}</td>
+                    <td style="text-align:right" >{I18n.translate('NeosRulez.Neos.Scheduler:Module.Task.Index:content.lastExecution')}</td>
+                    <td style="text-align:right" >{I18n.translate('NeosRulez.Neos.Scheduler:Module.Task.Index:content.nextExecution')}</td>
+                    <td style="text-align:center" >{I18n.translate('NeosRulez.Neos.Scheduler:Module.Task.Index:content.recurring')}</td>
+                    <td>&nbsp;</td>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                    <Neos.Fusion:Loop items={tasks}>
+                        <tr style={!item.active ? 'opacity:0.5' : false} >
+                            <td>
+                                {item.description}
+                            </td>
+                            <td>
+                                {item.frequency}
+                            </td>
+                            <td style="text-align:right" >
+                                {item.startDateTime ? Date.format(item.startDateTime, 'Y-m-d, H:i') : false}
+                            </td>
+                            <td style="text-align:right" >
+                                {item.stopDateTime ? Date.format(item.stopDateTime, 'Y-m-d, H:i') : false}
+                            </td>
+                            <td style="text-align:right" >
+                                {item.lastExecution ? Date.format(item.lastExecution, 'Y-m-d, H:i') : false}
+                            </td>
+                            <td style="text-align:right" >
+                                {item.nextExecution ? Date.format(item.nextExecution, 'Y-m-d, H:i') : false}
+                            </td>
+                            <td style="text-align:center" >
+                                {item.recurring ? '<i class="fas fa-check"></i>' : ''}
+                            </td>
+                            <td class="neos-action">
+                                <div class="neos-pull-right">
+                                    <Neos.Fusion:Link.Action class="neos-button neos-button-primary" href.action="edit" href.arguments={{task: item}}>
+                                        <i class="fas fa-pen"></i>
+                                    </Neos.Fusion:Link.Action>
+                                    <Neos.Fusion:Link.Action class={'neos-button ' + (item.active ? ' neos-button-danger' : ' neos-button-success')} href.action="toggle" href.arguments={{task: item}}>
+                                        <i @if.render={item.active} class="fas fa-toggle-on"></i>
+                                        <i @if.render={!item.active} class="fas fa-toggle-off"></i>
+                                    </Neos.Fusion:Link.Action>
+                                    <Neos.Fusion:Link.Action class="neos-button neos-button-danger" href.action="remove" href.arguments={{task: item}}>
+                                        <i class="fas fa-trash"></i>
+                                    </Neos.Fusion:Link.Action>
+                                </div>
+                            </td>
+                        </tr>
+                    </Neos.Fusion:Loop>
+
+                </tbody>
+            </table>
+
+            <div class="neos-footer">
+
+                <Neos.Fusion:Link.Action class="neos-button neos-button-primary" href.action="new" >
+                    {I18n.translate('NeosRulez.Neos.Scheduler:Module.Task.Index:content.createNew')}
+                </Neos.Fusion:Link.Action>
+
+            </div>
+
+        </NeosRulez.Neos.Scheduler:Component.DefaultLayout>
+    `
+}
