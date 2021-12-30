@@ -21,6 +21,13 @@ NeosRulez:
       senderMail: 'noreply@foo.com'
 ```
 
+## Cron job
+
+Create a cron job to be executed every minute ...
+```
+* * * * *     ./flow scheduler:execute >/dev/null 2>&1
+```
+
 ## Author
 
 * E-Mail: mail@patriceckhart.com
